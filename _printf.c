@@ -3,50 +3,48 @@
 /**
  * _printf -  produces output according to a format
  *
- * @format: The format string
+ * @format: string format
  *
- * Return: Number of bytes printed
+ * Return: number of bytes printed
 */
 
 int _printf(const char *format, ...)
 {
+	int len = 0, ch;
 	char *str;
-	int len, ch;
 	va_list ap;
+	va_list copy;
+
+	va_start(ap, format);
 
 	if (!format || (format[0] == '%' && !format[1]))
 		return (-1);
 	if (format[0] == '%' && format[1] == ' ' && !format[2])
 		return (-1);
-	str = format;
+	va_copy(copy, ap);
 
-	va_start(ap, format);
-	while (*str++)
+	while (*format)
 	{
-		if (*str != '%')
-		{
-			len += _putchar(str[0]);
-			continue;
-		}
+		if (*format != '%')
+			len += _putchar(*format);
 		else
 		{
-			str++;
-			if (*str == 'i' || *str == 'd')
+			format++;
+			if (*format == 'c')
 			{
 				ch = va_arg(ap, int);
-				len += _puts((char *)ch);
+				len += _putchar(ch);
 			}
-			else if (*str == 'c')
-			{
-				ch = va_arg(ap, char);
-				len += _puts((char *)ch);
-			}
-			else if (*str == 's')
-				len += _puts(va_arg(ap, char*));
-			else if (*str == '%')
-				len += _putchar('%');
+			else if (*format == 's')
+				len += print_string(&copy);
+			else if (*format == '%')
+				len += _putchar(*format);
+			else if (*format == 'd' || *format == 'i')
+				len += print_int(&copy);
 		}
+		format++;
 	}
 	va_end(ap);
+	va_end(copy);
 	return (len);
 }

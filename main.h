@@ -1,29 +1,20 @@
 #ifndef MAIN_H
 #define MAIN_H
 
-#include <stdarg.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <stdarg.h>
 
+int _putchar(char);
 
-#define STR_NULL "(nill)"
-
-/**
- * struct specifeir - specifier struct
- * @sp: The specifeir
- * @f: The associated func
-*/
-typedef struct specifeir
-{
-	char *sp;
-	int (*f)(va_list, char*);
-} sp_t;
-
-/* _printf.c module*/
+/* _printf.c module */
 int _printf(const char *format, ...);
 
-/* _puts.c module */
-int _puts(char *str);
-int _putchar(char ch);
+/* _func.c module */
+int print_string(va_list *ap);
+int print_int(va_list *ap);
+
+/* _convert.c module */
+char *int_to_str(int n);
 
 #endif
