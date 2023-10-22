@@ -36,14 +36,14 @@ int _printf(const char *format, ...)
 			else if (*format == 's')
 			{
 				str = va_arg(ap, char*);
+				if (!str)
+					return (-1)
 				chars_printed += print_str(str);
 			}
 			else if (*format == 'i' || *format == 'd')
 			{
 				arg = va_arg(ap, int);
-				str = int_to_str(arg);
-				while (*str)
-					chars_printed += _putchar(*str++);
+				chars_printed += print_int(arg);
 			}
 		}
 		format++;
