@@ -32,6 +32,5 @@ int print_int(int x)
 
 	while (*str)
 		len += _putchar(*str++);
-	free(str);
 	return (len);
 }
