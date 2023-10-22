@@ -10,41 +10,44 @@
 
 int _printf(const char *format, ...)
 {
-	int len = 0, ch;
+	int chars_printed = 0, arg;
 	char *str;
 	va_list ap;
-	va_list copy;
 
 	va_start(ap, format);
-
 	if (!format || (format[0] == '%' && !format[1]))
 		return (-1);
 	if (format[0] == '%' && format[1] == ' ' && !format[2])
 		return (-1);
-	va_copy(copy, ap);
-
 	while (*format)
 	{
 		if (*format != '%')
-			len += _putchar(*format);
+			chars_printed += _putchar(*format);
 		else
 		{
 			format++;
 			if (*format == 'c')
 			{
-				ch = va_arg(ap, int);
-				len += _putchar(ch);
+				arg = va_arg(ap, int);
+				chars_printed += _putchar(arg);
 			}
-			else if (*format == 's')
-				len += print_string(&copy);
 			else if (*format == '%')
-				len += _putchar(*format);
-			else if (*format == 'd' || *format == 'i')
-				len += print_int(&copy);
+				chars_printed += _putchar(*format);
+			else if (*format == 's')
+			{
+				str = va_arg(ap, char*);
+				chars_printed += print_str(str);
+			}
+			else if (*format == 'i' || *format == 'd')
+			{
+				arg = va_arg(ap, int);
+				str = int_to_str(arg);
+				while (*str)
+					chars_printed += _putchar(*str++);
+			}
 		}
 		format++;
 	}
 	va_end(ap);
-	va_end(copy);
-	return (len);
+	return (chars_printed);
 }

@@ -1,42 +1,37 @@
 #include "main.h"
 
 /**
- * int_to_str - convert an int to a string
+ * int_to_str - converts an int to a string
  *
- * @n: the integer to be converted
+ * @x: the integer
  *
- * Return: a string
+ * Return: the string
 */
 
-char *int_to_str(int n)
+char *int_to_str(int x)
 {
-	int len = 0, i;
 	int isNeg = 0;
+	int n, len = 0;
 	char *str;
 
-	if (n < 0)
+	if (x < 0)
 	{
 		isNeg = 1;
+		x = -x;
 		len++;
-		n = -n;
 	}
-
-	i = n;
-	while (i)
+	n = x;
+	while (n)
 	{
 		len++;
-		i /= 10;
+		n /= 10;
 	}
 	str = malloc((len + 1) * sizeof(char));
 
-	for (i = len - 1; i >= 0; i--)
+	for (n = 0; n < len; n++)
 	{
-		str[i] = n % 10 + 48;
-		n /= 10;
+		str[len - 1 - n] = x % 10 + 48;
+		x /= 10;
 	}
-
-	if (isNeg)
-		str[0] = '-';
-	str[len] = '\0';
 	return (str);
 }
