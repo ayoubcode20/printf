@@ -34,7 +34,7 @@ int _printf(const char *format, ...)
 		{
 			p++; /* next char */
 		}
-		p = get_width(p, &params, ap);
+		p = get_width(p, ap, &params);
 		p = get_precision(p, &params, ap);
 		if (!get_specifier(p))
 			sum += print_from_to(start, p,
